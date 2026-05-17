@@ -1,56 +1,28 @@
-[2026-05-17T20:23:58.528561200] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
-Sem3.model.exceptions.CustomerNotFoundException: Customer with phone number 123123123 does not exist in the registry.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:41)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:39)
-	at Sem3.view.Viewer.start(Viewer.java:30)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T20:23:58.528561200] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
-Sem3.model.exceptions.DatabaseFailureException: CRITICAL: Database connection lost. Unable to query server.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:31)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:39)
-	at Sem3.view.Viewer.start(Viewer.java:33)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T20:47:11.006629100] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
-Sem3.model.exceptions.CustomerNotFoundException: Customer with phone number 123123123 does not exist in the registry.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:41)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:29)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T20:47:11.006629100] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
-Sem3.model.exceptions.DatabaseFailureException: CRITICAL: Database connection lost. Unable to query server.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:31)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:32)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T20:49:44.161168300] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
-Sem3.model.exceptions.CustomerNotFoundException: Customer with phone number 123123123 does not exist in the registry.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:41)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:29)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T20:49:44.161168300] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
-Sem3.model.exceptions.DatabaseFailureException: CRITICAL: Database connection lost. Unable to query server.
-	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:31)
-	at Sem3.controller.Controller.search(Controller.java:27)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:32)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T21:20:47.914615400] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
+[2026-05-17T22:52:46.413779200] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
 Sem3.model.exceptions.CustomerNotFoundException: Customer with phone number 123123123 does not exist in the registry.
 	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:52)
 	at Sem3.controller.Controller.search(Controller.java:46)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:29)
-	at Sem3.Root.Main.main(Main.java:22)
-[2026-05-17T21:20:47.915614700] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
+	at Sem3.view.Viewer.basicFlow(Viewer.java:51)
+	at Sem3.view.Viewer.start(Viewer.java:39)
+	at Sem3.Root.Main.main(Main.java:28)
+[2026-05-17T22:52:46.413779200] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
 Sem3.model.exceptions.DatabaseFailureException: CRITICAL: Database connection lost. Unable to query server.
 	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:43)
 	at Sem3.controller.Controller.search(Controller.java:46)
-	at Sem3.view.Viewer.basicFlow(Viewer.java:38)
-	at Sem3.view.Viewer.start(Viewer.java:32)
-	at Sem3.Root.Main.main(Main.java:22)
+	at Sem3.view.Viewer.basicFlow(Viewer.java:51)
+	at Sem3.view.Viewer.start(Viewer.java:42)
+	at Sem3.Root.Main.main(Main.java:28)
+[2026-05-17T22:53:07.028091200] Exception thrown: Customer with phone number 123123123 does not exist in the registry.
+Sem3.model.exceptions.CustomerNotFoundException: Customer with phone number 123123123 does not exist in the registry.
+	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:52)
+	at Sem3.controller.Controller.search(Controller.java:46)
+	at Sem3.view.Viewer.basicFlow(Viewer.java:51)
+	at Sem3.view.Viewer.start(Viewer.java:39)
+	at Sem3.Root.Main.main(Main.java:28)
+[2026-05-17T22:53:07.028091200] Exception thrown: CRITICAL: Database connection lost. Unable to query server.
+Sem3.model.exceptions.DatabaseFailureException: CRITICAL: Database connection lost. Unable to query server.
+	at Sem3.integration.CustomerRegistry.findCustomerByNumber(CustomerRegistry.java:43)
+	at Sem3.controller.Controller.search(Controller.java:46)
+	at Sem3.view.Viewer.basicFlow(Viewer.java:51)
+	at Sem3.view.Viewer.start(Viewer.java:42)
+	at Sem3.Root.Main.main(Main.java:28)

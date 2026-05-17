@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import Sem3.model.domain.*;
 import Sem3.model.exceptions.CustomerNotFoundException;
