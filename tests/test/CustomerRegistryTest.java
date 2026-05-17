@@ -1,11 +1,12 @@
 package test;
 
-import Sem3.model.domain.*;
-import Sem3.model.exceptions.CustomerNotFoundException;
-import Sem3.model.exceptions.DatabaseFailureException;
-import Sem3.integration.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import Sem4.integration.*;
+import Sem4.model.domain.*;
+import Sem4.model.exceptions.CustomerNotFoundException;
+import Sem4.model.exceptions.DatabaseFailureException;
 
 import static org.junit.Assert.*;
 
