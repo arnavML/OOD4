@@ -1,6 +1,8 @@
 package Sem3.integration;
 
 import Sem3.model.domain.Customer;
+import Sem3.model.exceptions.CustomerNotFoundException;
+import Sem3.model.exceptions.DatabaseFailureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +31,26 @@ public class CustomerRegistry {
     }
 
     /**
-     * Searches through the list of customers to find a customer with a matching customer number.
-     * If found, it returns the customer; if not, it returns null.
+     * Searches for a customer. Throws exceptions to simulate errors.
      * @param number The customer number to search for.
-     * @return The found customer or null if not found.
+     * @return The found customer.
+     * @throws CustomerNotFoundException if the customer is not in the list.
+     * @throws DatabaseFailureException if a hardcoded fail-trigger number is used.
      */
-    public Customer findCustomerByNumber(int number) {
+    public Customer findCustomerByNumber(int number) throws CustomerNotFoundException {
+        // Task 1b: Simulate Database Failure
+        if (number == 999999999) {
+            throw new DatabaseFailureException("CRITICAL: Database connection lost. Unable to query server.");
+        }
+
         for (Customer customer : customers) {
             if (customer.getOrderNumber() == number) {
                 return customer;
             }
         }
-        return null;
+        
+        // Task 1a: Handle Alternative Flow 5a
+        throw new CustomerNotFoundException("Customer with phone number " + number + " does not exist in the registry.", number);
     }
 
     /**
@@ -50,5 +60,4 @@ public class CustomerRegistry {
     public java.util.List<Customer> getAllCustomers() {
         return new ArrayList<>(customers);
     }
-
 }

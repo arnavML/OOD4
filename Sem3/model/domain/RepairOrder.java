@@ -1,4 +1,7 @@
 package Sem3.model.domain;
+
+import Sem3.model.mapper.RepairOrderMapper;
+import Sem3.model.observer.RepairOrderObserver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +39,18 @@ public class RepairOrder {
         this.status = status;
     }
 
-    /** @return The customer associated with the order. */
+    // --- OBSERVER LOGIC ---
+    public void addObserver(RepairOrderObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (RepairOrderObserver obs : observers) {
+            obs.repairOrderUpdated(RepairOrderMapper.toDTO(this)); // Passing DTO protects encapsulation
+        }
+    }
+
+    // --- GETTERS (No changes) ---
     public Customer getCustomer() { return customer; }
 
     /** @return The bike associated with the order. */
@@ -94,13 +108,21 @@ public class RepairOrder {
         return totalCost;
     }
 
-    /**
-    * Adds a repair task to the repair order with the specified description and cost.
-    * @param taskDescription The description of the repair task being added.
-    * @param cost The cost of the repair task being added.
-    */
-    public void addRepairTask(String taskDescription, Double cost) {
-        repairTasks.add(new RepairTask(taskDescription, cost));
+    // --- SETTERS (Updated to notify observers on state change) ---
+    public void setStatus(String status) { 
+        this.status = status; 
+        notifyObservers(); // State changed!
     }
 
+    public void setDiagnosticReport(String diagnosticReport) { 
+        this.diagnosticReport = diagnosticReport; 
+        notifyObservers(); // State changed!
+    }
+
+    public void addRepairTask(String taskDescription, Double cost) {
+        repairTasks.add(new RepairTask(taskDescription, cost));
+        notifyObservers(); // State changed!
+    }
+    
+    // (Other basic setters omitted for brevity, but add notifyObservers() if they change workflow state)
 }

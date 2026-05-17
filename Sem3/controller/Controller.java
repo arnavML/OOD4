@@ -5,16 +5,9 @@ import Sem3.integration.*;
 import Sem3.model.domain.*;
 import Sem3.model.dto.*;
 import Sem3.model.mapper.*;
+import Sem3.model.exceptions.CustomerNotFoundException;
+import Sem3.model.observer.RepairOrderObserver;
 
-
-/**
- * The Controller class is responsible for handling the logic of the application, 
- * including searching for customers, creating repair orders, and managing the details of the repair orders.
- * It interacts with the CustomerRegistry to find customers, the RepairOrderRegistry to manage repair orders, 
- * and the Printer to print repair order details.
- * It also stores the current repair order via the SessionManager to facilitate getting their details 
- * without having to search for them again.
- */
 public class Controller {
 
     private CustomerRegistry customerRegistry;
@@ -35,16 +28,9 @@ public class Controller {
         this.sessionManager = new SessionManager(repairOrderRegistry);
     }
 
-    /**
-     * Searches for a customer by their phone number. 
-     * This is used in the View when the receptionist/technician searches for a customer.
-     * Finds the customer in the registry and returns the DTO if found, otherwise returns null.
-     * @param number The phone number of the customer to search for.
-     * @return A CustomerDTO representing the found customer, or null if not found.
-     */
-    public CustomerDTO search(int number) {
-        CustomerDTO customerDTO = CustomerMapper.toDTO(customerRegistry.findCustomerByNumber(number));
-        return customerDTO;
+    // UPDATED: Now throws CustomerNotFoundException and Runtime Database exceptions
+    public CustomerDTO search(int number) throws CustomerNotFoundException {
+        return CustomerMapper.toDTO(customerRegistry.findCustomerByNumber(number));
     }
 
     /**
@@ -59,13 +45,13 @@ public class Controller {
         repairOrderRegistry.addRepairOrder(newRepairOrder);
         sessionManager.startSession(number, newRepairOrder);
     }
+    
+    // NEW: Pass the observer through the controller to the domain layer safely
+    public void addRepairOrderObserver(int number, RepairOrderObserver observer) {
+        RepairOrder currentRepairOrder = sessionManager.getSearchedOrders(number);
+        currentRepairOrder.addObserver(observer);
+    }
 
-    /**
-     * Gets the details of the repair order.
-     * This is used in the View to display the details of the repair order after it has been created.
-     * @param number The phone number associated with the repair order.
-     * @return A RepairOrderDTO containing the details of the repair order.
-     */
     public RepairOrderDTO getRepairOrderDetails(int number) {
         RepairOrder currentRepairOrder = sessionManager.getSearchedOrders(number);
         return RepairOrderMapper.toDTO(currentRepairOrder);
