@@ -2,85 +2,85 @@ package Sem3.view;
 
 import Sem3.controller.Controller;
 import Sem3.model.dto.*;
+import Sem3.model.exceptions.CustomerNotFoundException;
+import Sem3.model.exceptions.DatabaseFailureException;
+import Sem3.integration.LogHandler;
+import Sem3.integration.RepairOrderLogger;
 
-public class Viewer { //The View class is responsible for interacting with the user and displaying information. It has a reference to the Controller, which it uses to perform actions and retrieve data to display.
-
+/**
+ * The Viewer class is responsible for simulating the user interface of the application. It interacts with the Controller to perform operations such as searching for customers, creating repair orders, and updating repair orders. It also handles exceptions that may occur during these operations and provides user-friendly messages while logging the exceptions for developers.
+ */
+public class Viewer { 
     private Controller controller;
+    private LogHandler logHandler;
 
-    public Viewer(Controller controller) { // Initializes the view with the given controller. It also sets up some mock data for testing purposes.
+    /**
+     * Constructs a new Viewer with the specified controller.
+     * @param controller The controller to interact with.
+     */
+    public Viewer(Controller controller) { 
         this.controller = controller;
+        this.logHandler = new LogHandler();
         System.out.println("System: Starting the View...");
     }
-    private int numberToSearch = 739988776; // Example number to search
-    private String repairDescription = "Routine maintenance"; // Example repair description
-    private String date = "2024-06-01"; // Example date
 
+    private int validNumberToSearch = 739988776; // Zlatan
+    private int invalidNumberToSearch = 123123123; // Fails with CustomerNotFound
+    private int databaseCrashNumber = 999999999; // Fails with Database failure
 
-    public void start() { // Starts the view by calling the basic flow of the application, which includes receiving a bike from a customer, performing diagnostics and repair, and checking out the customer.
-        basicFlow();
-    }
-    private void basicFlow() { //Runs the sections of the basic flow
-        System.out.println("System: Running basic flow...");
-        CustomerDTO customer = controller.search(numberToSearch);
-        System.out.println("System: Returned customer details from search method:");
+    /**
+     * Starts the viewer by running through several scenarios to demonstrate the functionality of the application, including a basic flow with valid input, a scenario where the customer is not found, and a scenario simulating a database crash. Each scenario will show how the system handles these situations and provides feedback to the user.
+     */
+    public void start() { 
+        System.out.println("\n--- RUNNING SCENARIO 1: Basic Flow (Success) ---");
+        basicFlow(validNumberToSearch);
 
-        System.out.println("Customer search Details:");
-        printCustomerDetails(customer);
-        printBikeDetails(customer.getBikeDTO());
+        System.out.println("\n--- RUNNING SCENARIO 2: Customer Not Found ---");
+        basicFlow(invalidNumberToSearch);
 
-        System.out.println("System: Details are correct, proceeding to create repair order...");
-
-        controller.createRepairOrder(numberToSearch, repairDescription, date, "pending");
-        RepairOrderDTO repairOrderDetails = controller.getRepairOrderDetails(numberToSearch);
-        System.out.println("System: Returned repair order details from getRepairOrderDetails method:");
-        
-        System.out.println("Technician View - Repair Order Details:");
-        printRepairOrderDetails(repairOrderDetails);
-        printCustomerDetails(customer);
-        printBikeDetails(customer.getBikeDTO());
-
-        controller.addDiagnosticReportToOrder(numberToSearch, "The bike needs a new wheel, brake pads, and battery.");
-        controller.addRepairTaskToOrder(numberToSearch, "new Wheel", 100.0);
-        controller.addRepairTaskToOrder(numberToSearch, "new Brake Pads", 150.0);
-        controller.addRepairTaskToOrder(numberToSearch, "new Battery", 40.0);
-
-        repairOrderDetails = controller.getRepairOrderDetails(numberToSearch);
-        System.out.println("System: Receptionist View - Updated Repair Order Details:");
-        printRepairOrderDetails(repairOrderDetails);
-        printRepairTasks(repairOrderDetails);
-        controller.updateRepairOrderStatus(numberToSearch, "Accepted");
-        
-        controller.checkoutCustomer(numberToSearch);
+        System.out.println("\n--- RUNNING SCENARIO 3: Database Crash ---");
+        basicFlow(databaseCrashNumber);
     }
 
-    private void printCustomerDetails(CustomerDTO customer) { //Prints the details of the customer, including their name, customer number, email, and bike details. This is used in the View to display the customer's information after searching for them.
-        System.out.println("---------------------------------------------------------------------------------" + "\n" + "Customer Details:");
-        System.out.println("Name: " + customer.getName());
-        System.out.println("Customer Number: " + customer.getOrderNumber()); //perhaps redundant since it's the same as the phone number, but it could be useful if we want to change the way we identify customers in the future
-        System.out.println("Email: " + customer.getEmail());
-    }
-    private void printBikeDetails(BikeDTO bike) { //Prints the details of the customer's bike, including the make, model, serial number, and owner's phone number. This is used in the View to display the bike's information after searching for the customer.
-        System.out.println("---------------------------------------------------------------------------------" + "\n" + "Bike Details:");
-        System.out.println("Bike Make: " + bike.getBrand());
-        System.out.println("Bike Model: " + bike.getModel());
-        System.out.println("Bike Serial Number: " + bike.getSerialNumber());
-    }
+    /**
+     * Simulates a basic flow for handling customer searches and repair order operations.
+     * @param numberToSearch The customer number to search for.
+     */
+    private void basicFlow(int numberToSearch) { 
+        try {
+            CustomerDTO customer = controller.search(numberToSearch);
+            System.out.println("System: Returned customer details from search method:");
+            printCustomerDetails(customer);
 
-    private void printRepairOrderDetails(RepairOrderDTO repairOrderDetails) { //Prints the details of the repair order, including the customer's name, bike make and model, repair description, date, and status. This is used in the View to display the repair order's information after it has been created.
-        System.out.println("---------------------------------------------------------------------------------" + "\n" + "Repair Order Details:");
-        System.out.println("Customer Number: " + repairOrderDetails.getOrderNumber());
-        System.out.println("Repair Description: " + repairOrderDetails.getDescription());
-        System.out.println("Repair Date: " + repairOrderDetails.getDate());
-        System.out.println("Repair Status: " + repairOrderDetails.getStatus());
-        System.out.println("Diagnostic Report: " + repairOrderDetails.getDiagnosticReport());
-    }
+            controller.createRepairOrder(numberToSearch, "Routine maintenance", "2024-06-01", "Pending");
+            
+            controller.addRepairOrderObserver(numberToSearch, new RepairOrderView());
+            controller.addRepairOrderObserver(numberToSearch, new RepairOrderLogger());
 
-    private void printRepairTasks(RepairOrderDTO repairOrderDetails) { //Prints the list of repair tasks associated with the repair order, including the description and cost of each task. This is used in the View to display the repair tasks after they have been added to the repair order.
-        System.out.println("---------------------------------------------------------------------------------" + "\n" + "Repair Tasks:");
-        for (RepairTaskDTO task : repairOrderDetails.getRepairTasks()) {
-            System.out.println("Task Description: " + task.getDescription());
-            System.out.println("Task Cost: " + task.getCost() + "\n");
+            controller.addDiagnosticReportToOrder(numberToSearch, "The bike needs a new wheel and brake pads.");
+            controller.addRepairTaskToOrder(numberToSearch, "New Wheel", 100.0);
+            controller.updateRepairOrderStatus(numberToSearch, "In Progress");
+
+            controller.checkoutCustomer(numberToSearch);
+
+        } catch (CustomerNotFoundException e) {
+            System.out.println("USER MESSAGE: The phone number you entered (" + e.getSearchedNumber() + ") is not registered. Please verify and try again.");
+            logHandler.logException(e); 
+        } catch (DatabaseFailureException e) {
+            System.out.println("USER MESSAGE: We are currently experiencing technical difficulties. Please try again later.");
+            logHandler.logException(e);
         }
-        System.out.println("Total: " + repairOrderDetails.getTotalCost() + " SEK");
+    }
+
+    /**
+     * Prints the details of a customer to the console.
+     * @param customer The CustomerDTO containing the details of the customer to be printed.
+     */
+    private void printCustomerDetails(CustomerDTO customer) { 
+        System.out.println("---------------------------------------------------------------------------------");
+        System.out.println("Customer Details:");
+        System.out.println("Name: " + customer.getName());
+        System.out.println("Customer Number: " + customer.getOrderNumber());
+        System.out.println("Email: " + customer.getEmail());
     }
 }

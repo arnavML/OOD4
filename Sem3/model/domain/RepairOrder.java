@@ -21,15 +21,16 @@ public class RepairOrder {
     private String date;
     private String diagnosticReport;
     private List<RepairTask> repairTasks = new ArrayList<>();
+    private List<RepairOrderObserver> observers = new ArrayList<>();
 
     /**
-     * Constructor for the RepairOrder class.
-     * Initializes the order and sets the bike field based on the customer's associated bike.
-     * @param customer The customer requesting the repair.
-     * @param description The initial description of the repair needed.
-     * @param date The date the repair order is created.
-     * @param status The initial status of the order (e.g., "Pending").
-     */
+    * Constructs a new RepairOrder with the specified customer, description, date, and status.
+    * The bike and order number are derived from the customer.
+    * @param customer The customer associated with the repair order.
+    * @param description A description of the repair needed.
+    * @param date The date the repair order was created.
+    * @param status The initial status of the repair order.
+    */
     public RepairOrder(Customer customer, String description, String date, String status) {
         this.customer = customer;
         this.bike = customer.getBike();
@@ -39,18 +40,24 @@ public class RepairOrder {
         this.status = status;
     }
 
-    // --- OBSERVER LOGIC ---
+    /**
+     * Adds an observer to the list of observers.
+     * @param observer The observer to add.
+     */
     public void addObserver(RepairOrderObserver observer) {
         observers.add(observer);
     }
 
+    /**
+     * notifies all registered observers of a change to the repair order by sending them an updated DTO.
+     */
     private void notifyObservers() {
         for (RepairOrderObserver obs : observers) {
-            obs.repairOrderUpdated(RepairOrderMapper.toDTO(this)); // Passing DTO protects encapsulation
+            obs.repairOrderUpdated(RepairOrderMapper.toDTO(this));
         }
     }
 
-    // --- GETTERS (No changes) ---
+    /** @return The customer associated with the order. */
     public Customer getCustomer() { return customer; }
 
     /** @return The bike associated with the order. */
@@ -74,6 +81,9 @@ public class RepairOrder {
     /** @return An unmodifiable list of repair tasks associated with the order. */
     public List<RepairTask> getRepairTasks() { return Collections.unmodifiableList(repairTasks); }
 
+
+
+
     /** @param customer The customer to set for the order. */
     public void setCustomer(Customer customer) { this.customer = customer; }
     
@@ -87,13 +97,19 @@ public class RepairOrder {
     public void setDescription(String description) { this.description = description; }
     
     /** @param status The status to set for the order. */
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(String status) { 
+        this.status = status; 
+        notifyObservers();
+    }
     
     /** @param date The date to set for the order. */
     public void setDate(String date) { this.date = date; }
     
     /** @param diagnosticReport The diagnostic report to set for the order. */
-    public void setDiagnosticReport(String diagnosticReport) { this.diagnosticReport = diagnosticReport; }
+    public void setDiagnosticReport(String diagnosticReport) { 
+        this.diagnosticReport = diagnosticReport; 
+        notifyObservers();
+    }
 
     /**
      * Calculates and returns the total cost of the repair order by summing up 
@@ -108,21 +124,14 @@ public class RepairOrder {
         return totalCost;
     }
 
-    // --- SETTERS (Updated to notify observers on state change) ---
-    public void setStatus(String status) { 
-        this.status = status; 
-        notifyObservers(); // State changed!
-    }
-
-    public void setDiagnosticReport(String diagnosticReport) { 
-        this.diagnosticReport = diagnosticReport; 
-        notifyObservers(); // State changed!
-    }
-
+    /**
+    * Adds a new repair task to the order and notifies observers of the change.
+    * @param taskDescription The description of the repair task.
+    * @param cost The cost of the repair task.
+    */
     public void addRepairTask(String taskDescription, Double cost) {
         repairTasks.add(new RepairTask(taskDescription, cost));
-        notifyObservers(); // State changed!
+        notifyObservers();
     }
-    
-    // (Other basic setters omitted for brevity, but add notifyObservers() if they change workflow state)
+
 }

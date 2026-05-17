@@ -38,7 +38,7 @@ public class CustomerRegistry {
      * @throws DatabaseFailureException if a hardcoded fail-trigger number is used.
      */
     public Customer findCustomerByNumber(int number) throws CustomerNotFoundException {
-        // Task 1b: Simulate Database Failure
+
         if (number == 999999999) {
             throw new DatabaseFailureException("CRITICAL: Database connection lost. Unable to query server.");
         }
@@ -49,7 +49,6 @@ public class CustomerRegistry {
             }
         }
         
-        // Task 1a: Handle Alternative Flow 5a
         throw new CustomerNotFoundException("Customer with phone number " + number + " does not exist in the registry.", number);
     }
 

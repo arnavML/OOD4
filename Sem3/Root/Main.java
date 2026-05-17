@@ -8,6 +8,9 @@ import Sem3.model.domain.Customer;
 import Sem3.view.Printer;
 import Sem3.view.Viewer;
 
+/**
+ * The Main class is the entry point of the application. It initializes the necessary components (view, controller, customer registry, repair order registry, and printer) and starts the view to accept user input and perform search for customers and repair orders.
+ */
 public class Main { //The Main class is the entry point of the application. It initializes the necessary components (view, controller, customer registry, repair order registry, and printer) and starts the view to accept user input and perform search for customers and repair orders.
     private static Viewer view;
     private static Controller controller;
@@ -15,6 +18,9 @@ public class Main { //The Main class is the entry point of the application. It i
     private static RepairOrderRegistry repairOrderRegistry = new RepairOrderRegistry();
     private static Printer printer = new Printer();
 
+    /**
+     * The main method is the entry point of the application.
+     */
     public static void main(String[] args) { //Boots up the system by initializing the controller and view, and then starts the view to perform search
         controller = new Controller(customerRegistry, repairOrderRegistry, printer);
         view = new Viewer(controller);
@@ -22,7 +28,10 @@ public class Main { //The Main class is the entry point of the application. It i
         view.start(); // Start the view to accept user input and perform search // Can also start itself in initialization, but this way there have more control over when it starts for future use
     }
 
-    private static void setupMockData() { // Sets up some mock data for testing purposes by adding several customers to the customer registry. Each customer has a unique name, customer number, email, and bike.
+    /**
+     * Sets up some mock data for testing purposes by adding several customers to the customer registry. Each customer has a unique name, customer number, email, and bike.
+     */
+    private static void setupMockData() {
         //Customer Data MADE WITH AI
 
         // Astrid with a classic Swedish Crescent bike

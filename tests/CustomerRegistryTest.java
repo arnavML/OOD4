@@ -1,6 +1,8 @@
 package tests;
 
 import Sem3.model.domain.*;
+import Sem3.model.exceptions.CustomerNotFoundException;
+import Sem3.model.exceptions.DatabaseFailureException;
 import Sem3.integration.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +35,7 @@ public class CustomerRegistryTest { // This class contains unit tests for the Cu
     }
 
     @Test
-    public void testFindCustomerByNumber_Success() { // Tests that finding a customer by their unique customer number works correctly when the customer exists in the registry. It uses the setUp method to create a test customer and adds them to the registry, then searches for them by their number and asserts that the correct customer is returned.
+    public void testFindCustomerByNumber_Success() throws CustomerNotFoundException { // Tests that finding a customer by their unique customer number works correctly when the customer exists in the registry. It uses the setUp method to create a test customer and adds them to the registry, then searches for them by their number and asserts that the correct customer is returned.
         // Arrange
         registry.addCustomer(testCustomer);
         
@@ -45,15 +47,24 @@ public class CustomerRegistryTest { // This class contains unit tests for the Cu
         assertEquals("The name of the found customer should match.", "Astrid Lindgren", foundCustomer.getName());
     }
 
-    @Test
-    public void testFindCustomerByNumber_NotFound() { // Tests that finding a customer by their unique customer number correctly returns null when the customer does not exist in the registry. It uses the setUp method to create a test customer and adds them to the registry, then searches for a different number and asserts that null is returned.
+    @Test(expected = CustomerNotFoundException.class)
+    public void testFindCustomerByNumber_NotFound() throws CustomerNotFoundException { // Tests that finding a customer by their unique customer number correctly returns null when the customer does not exist in the registry. It uses the setUp method to create a test customer and adds them to the registry, then searches for a different number and asserts that null is returned.
         // Arrange: We add a customer with number 708123456
         registry.addCustomer(testCustomer);
         
         // Act: Try to search for a completely different number
-        Customer foundCustomer = registry.findCustomerByNumber(999999999);
+        Customer foundCustomer = registry.findCustomerByNumber(123456789);
         
         // Assert: Prove the system correctly returns null when it can't find a match
         assertNull("Searching for a non-existent number should return null.", foundCustomer);
+    }
+
+    @Test(expected = DatabaseFailureException.class)
+    public void testFindCustomerByNumber_DatabaseFailure() throws CustomerNotFoundException { // Tests that finding a customer by their unique customer number correctly throws a DatabaseFailureException when the database fails. It uses the setUp method to create a test customer and adds them to the registry, then searches for a different number and expects an exception to be thrown.
+        // Arrange: We add a customer with number 708123456
+        registry.addCustomer(testCustomer);
+        
+        // Act & Assert: Try to search for a completely different number and expect an exception
+        registry.findCustomerByNumber(999999999);
     }
 }
