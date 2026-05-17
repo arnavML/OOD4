@@ -1,7 +1,5 @@
 package Sem4.model.domain;
 
-import Sem4.model.domain.Bike;
-
 /**
  * Represents a customer in the system, with properties for name, customer number, 
  * email, and bike (which links the customer to their bike in the system).

@@ -6,8 +6,6 @@ import Sem4.model.domain.RepairOrder;
 import Sem4.model.domain.RepairTask;
 import Sem4.model.dto.RepairOrderDTO;
 import Sem4.model.dto.RepairTaskDTO;
-import Sem4.model.mapper.CustomerMapper;
-import Sem4.model.mapper.RepairTaskMapper;
 
 /**
  * A mapper class for converting between RepairOrder domain objects and RepairOrderDTO data transfer objects.

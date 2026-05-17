@@ -3,11 +3,7 @@ package Sem4.model.dto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import Sem4.model.dto.BikeDTO;
-import Sem4.model.dto.CustomerDTO;
 import Sem4.model.dto.RepairOrderDTO;
-import Sem4.model.dto.RepairTaskDTO;
 
 /**
  * A Data Transfer Object (DTO) for representing the details of a repair order in the bike repair system.

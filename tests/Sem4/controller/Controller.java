@@ -1,6 +1,5 @@
 package Sem4.controller;
 
-import Sem4.controller.SessionManager;
 import Sem4.integration.*;
 import Sem4.model.domain.*;
 import Sem4.model.dto.*;

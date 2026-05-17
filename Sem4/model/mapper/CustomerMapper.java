@@ -1,7 +1,6 @@
 package Sem4.model.mapper;
 import Sem4.model.domain.Customer;
 import Sem4.model.dto.CustomerDTO;
-import Sem4.model.mapper.BikeMapper;
 
 /**
  * A mapper class for converting between Customer domain objects and CustomerDTO data transfer objects.

@@ -1,6 +1,5 @@
 package Sem4.model.dto;
 
-import Sem4.model.dto.BikeDTO;
 
 /**
  * A Data Transfer Object (DTO) for representing customer information in the bike repair system.

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Sem4.model.domain.Bike;
-import Sem4.model.domain.Customer;
-import Sem4.model.domain.RepairTask;
 import Sem4.model.mapper.RepairOrderMapper;
 import Sem4.model.observer.RepairOrderObserver;
 

@@ -22,3 +22,27 @@
    Status: Pending, Cost: 100.0 SEK
 [2026-05-17T22:54:42.729535900] Repair Order Updated for Customer: 739988776
    Status: In Progress, Cost: 100.0 SEK
+[2026-05-17T22:59:57.200654200] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 0.0 SEK
+[2026-05-17T22:59:57.210106400] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 100.0 SEK
+[2026-05-17T22:59:57.210106400] Repair Order Updated for Customer: 739988776
+   Status: In Progress, Cost: 100.0 SEK
+[2026-05-17T23:00:32.643885100] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 0.0 SEK
+[2026-05-17T23:00:32.653400500] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 100.0 SEK
+[2026-05-17T23:00:32.653400500] Repair Order Updated for Customer: 739988776
+   Status: In Progress, Cost: 100.0 SEK
+[2026-05-17T23:00:41.161612600] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 0.0 SEK
+[2026-05-17T23:00:41.170128300] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 100.0 SEK
+[2026-05-17T23:00:41.171631900] Repair Order Updated for Customer: 739988776
+   Status: In Progress, Cost: 100.0 SEK
+[2026-05-17T23:00:54.428383300] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 0.0 SEK
+[2026-05-17T23:00:54.437497900] Repair Order Updated for Customer: 739988776
+   Status: Pending, Cost: 100.0 SEK
+[2026-05-17T23:00:54.438562500] Repair Order Updated for Customer: 739988776
+   Status: In Progress, Cost: 100.0 SEK

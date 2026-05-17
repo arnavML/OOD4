@@ -6,7 +6,6 @@ import Sem4.integration.RepairOrderLogger;
 import Sem4.model.dto.*;
 import Sem4.model.exceptions.CustomerNotFoundException;
 import Sem4.model.exceptions.DatabaseFailureException;
-import Sem4.view.RepairOrderView;
 
 /**
  * The Viewer class is responsible for simulating the user interface of the application. It interacts with the Controller to perform operations such as searching for customers, creating repair orders, and updating repair orders. It also handles exceptions that may occur during these operations and provides user-friendly messages while logging the exceptions for developers.
